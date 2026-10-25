@@ -1,0 +1,5 @@
+table inet edge_logger {
+  chain forward {
+    type filter hook forward priority filter; policy drop;
+  }
+}

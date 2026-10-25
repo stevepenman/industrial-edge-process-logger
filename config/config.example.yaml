@@ -1,0 +1,121 @@
+# Fictional, vendor-neutral signal map. No production endpoint or credentials.
+machine:
+  name: DEMO-01
+  timezone: Europe/London
+application:
+  config_version: 1
+acquisition:
+  provider: none
+  communication_gap_seconds: null
+reporting:
+  trigger_mode: acquisition_hours
+  acquisition_hours: 120
+  maximum_calendar_days: null
+  trend_bucket_minutes: 5
+  trend_bucket_count: 30
+  generate_if_due_on_startup: true
+  minimum_records: 1
+  maximum_records: 20000
+retention:
+  days_after_successful_email: 30
+operations:
+  automatic_retention: false
+  poll_seconds: 30
+  stale_data_seconds: 300
+  minimum_free_disk_bytes: 1073741824
+ups:
+  provider: none
+  status_command: []
+  status_timeout_seconds: 3
+  shutdown_delay_seconds: 90
+production:
+  job_id: null
+  product_id: null
+  mould_id: null
+  material_batch: null
+  active_cavities: null
+  sample_parts: null
+rules:
+  long_cycle_seconds: null
+  source_data_gap_seconds: 60
+opcua:
+  endpoint: null
+  security_mode: null
+  security_policy: null
+  username: null
+  password_env: EDGE_OPCUA_PASSWORD
+  client_certificate: null
+  private_key: null
+  trusted_server_certificate: null
+  subscription_interval_ms: null
+  reconnect_initial_seconds: 1
+  reconnect_max_seconds: 30
+  queue_size: 1000
+  monitored_item_queue_size: 1000
+  snapshot_wait_seconds: 2
+  snapshot_timestamp_tolerance_seconds: 0
+  asynchronous_max_age_seconds: 60
+  run_id: null
+email:
+  enabled: false
+  host: null
+  port: 587
+  tls_mode: starttls
+  username: null
+  password_env: EDGE_SMTP_PASSWORD
+  sender: null
+  recipients: []
+  timeout_seconds: 30
+  max_attachment_bytes: 18874368
+  max_message_bytes: 26214400
+paths:
+  raw: build/demo/raw
+  reports: build/demo/reports
+  state: build/demo/state
+signals:
+  cycle_id:
+    source_name: Cycles
+    display_name: Cycle ID
+    category: identifier
+    expected_datatype: int
+    is_cycle_id: true
+  pressure:
+    source_name: Pressure
+    display_name: Pressure
+    category: process
+    unit: bar
+    expected_datatype: float
+    trend: true
+    chart_group: pressure
+  cycle_time:
+    source_name: Cycle time
+    display_name: Cycle time
+    category: process
+    unit: s
+    expected_datatype: float
+    trend: true
+    chart_group: cycle_timing
+    exception_rule: long_cycle
+  temperature:
+    source_name: Temperature
+    display_name: Temperature
+    category: temperature
+    unit: C
+    expected_datatype: float
+    trend: true
+    chart_group: barrel
+  rejected_parts:
+    source_name: Rejected parts
+    display_name: Rejected parts per cycle
+    category: quality
+    expected_datatype: int
+    exception_rule: bad_part
+    bad_part_mode: quantity
+  energy:
+    source_name: Energy
+    display_name: Energy per cycle
+    category: process
+    unit: Wh
+    expected_datatype: float
+    trend: true
+    chart_group: energy_per_cycle

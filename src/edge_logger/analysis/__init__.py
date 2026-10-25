@@ -1,0 +1,1 @@
+"""Streaming report-period analysis."""

@@ -1,0 +1,25 @@
+[Unit]
+Description=DEMO-01 read-only process logger
+After=local-fs.target
+
+[Service]
+Type=simple
+User=edge-logger
+Group=edge-logger
+StateDirectory=edge-logger
+LogsDirectory=edge-logger
+WorkingDirectory=/opt/edge-logger
+EnvironmentFile=-/etc/edge-logger/environment
+ExecStart=/opt/edge-logger/.venv/bin/edge-logger --config /etc/edge-logger/config.yaml run
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=90
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/edge-logger /var/log/edge-logger
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=Consume the DEMO-01 UPS request and power off the host
+ConditionPathExists=/var/lib/edge-logger/state/shutdown-request.json
+
+[Service]
+Type=oneshot
+User=root
+ExecStartPre=/usr/bin/rm -f -- /var/lib/edge-logger/state/shutdown-request.json
+ExecStart=/usr/bin/systemctl --no-block poweroff
+NoNewPrivileges=true
+ProtectHome=true
